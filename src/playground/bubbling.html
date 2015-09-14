@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <div class="great-grand-father">
+    <div class="grand-father">
+      <div class="father">
+        <div class="son"></div>
+      </div>
+    </div>
+  </div>
+  <style>
+    .son,
+    .father,
+    .grand-father,
+    .great-grand-father {
+      margin: 50px;
+      border: 1px solid red;
+    }
+    .son:before { content: "son" }
+    .father:before { content: "father" }
+    .grand-father:before { content: "grand-father" }
+    .great-grand-father:before { content: "great-grand-father" }
+  </style>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script>
+    $(function() {
+      $('.son').on('click', function(event) {
+        console.log('This is son', event.target);
+      });
+      $('.father').on('click', function(event) {
+        console.log('This is father', event.target);
+      });
+      $('.grand-father').on('click', function(event) {
+        event.stopPropagation();
+        console.log('This is grand father', event.target);
+      });
+      $('.great-grand-father').on('click', function(event) {
+        console.log('This is great grand father', event.target);
+      });
+    })
+  </script>
+</body>
+</html>

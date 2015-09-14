@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WEIRD Javascript</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="./vendors/reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="./vendors/reveal.js/css/theme/night.css">
+  <link rel="stylesheet" href="./vendors/reveal.js/lib/css/zenburn.css">
+  <link rel="stylesheet" href="./vendors/reveal.js/css/print/pdf.css" media="print">
+  <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section id="heads-up">
+        <section>
+          <h3>
+            <b class="fragment fade-in" data-autoslide="150" data-fragment-index="1">W</b>
+            <small class="fragment fade-in" data-autoslide="280" data-fragment-index="11">hat</small>
+
+            <small class="fragment fade-in" data-autoslide="280" data-fragment-index="12">an</small>
+
+            <b class="fragment fade-in" data-autoslide="150" data-fragment-index="2">E</b>
+            <small class="fragment fade-in" data-autoslide="280" data-fragment-index="9">xtremely</small>
+
+            <b class="fragment fade-in" data-autoslide="150" data-fragment-index="3">I</b>
+            <small class="fragment fade-in" data-autoslide="280" data-fragment-index="7">nteresting</small>
+
+            <small class="fragment fade-in" data-fragment-index="13">and</small>
+
+            <b class="fragment fade-in" data-autoslide="150" data-fragment-index="4">R</b>
+            <small class="fragment fade-in" data-autoslide="280" data-fragment-index="10">eally</small>
+
+            <b class="fragment fade-in" data-autoslide="150" data-fragment-index="5">D</b>
+            <small class="fragment fade-in" data-autoslide="280" data-fragment-index="8">ifferent</small>
+          </h3>
+          <h1 class="fragment fade-in shine" data-fragment-index="6">javascript</h1>
+        </section>
+
+        <section>
+          <h2>What's gonna happen then?</h2>
+          <ul>
+            <li class="fragment">Javascript is <b>!</b> Java script (~5 min)</li>
+            <li class="fragment">Javascript D-E-F (~ 50 min)</li>
+            <li class="fragment">Javascript quick quiz (~15 min)</li>
+          </ul>
+        </section>
+      </section><!-- #heads-up -->
+
+
+      <section id="js-not-java">
+        <section>
+          <h2><b>!</b> java script</h2>
+          <ul>
+            <li class="fragment">javascript vs. java</li>
+            <li class="fragment">javascript vs. ECMAscript</li>
+            <li class="fragment">javascript vs. ActionScript, as3 (whatever)</li>
+            <li class="fragment">javascript vs. JS</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>JS is not everywhere</h3>
+          <ul>
+            <li class="fragment">in browser: user interaction, animation, ria ..</li>
+            <li class="fragment">as a server: web-server, static file serve ..</li>
+            <li class="fragment">as autobot: building (grulp, grunt, less, sass ..), testing (Selenium, PhantomJS ..), etc.</li>
+            <li class="fragment">as CLI app ..</li>
+            <li class="fragment">..</li>
+          </ul>
+        </section>
+      </section><!-- #js-not-java -->
+
+
+      <section id="def-intro">
+        <h1>Dive into D-E-F</h1>
+        <p class="fragment">
+          <small>
+            Before you begin, make sure you're comfortable with
+            Javascript ABC, or just feel free to take tour from
+            <a href="http://www.w3schools.com/jsref/">w3schools</a>
+          </small>
+        </p>
+      </section><!-- #def-intro -->
+
+      <section id="def-01">
+        <section>
+          <h2>Monday D-E-F</h2>
+          <h4><b>DOM</b> is listening to event ..</h4>
+        </section>
+
+        <section>
+          <h3>Bubbling &uarr; &uarr; &uarr;</h3>
+          <small>
+            <a target="_blank" href="./playground/bubbling.html">playground/bubbling.html</a>
+          </small>
+          <pre>
+            <code class="html" data-trim contenteditable="true">
+&lt;div class="great-grand-father"&gt;
+  &lt;div class="grand-father"&gt;
+    &lt;div class="father"&gt;
+      &lt;div class="son"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+            </code>
+          </pre>
+
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+$('.son').on('click', function(event) {
+  console.log('This is son', event.target);
+});
+
+$('.father').on('click', function(event) {
+  console.log('This is father', event.target);
+});
+
+$('.grand-father').on('click', function(event) {
+  event.stopPropagation(); // this will stop the click event to go up
+  console.log('This is grand father', event.target);
+});
+
+$('.great-grand-father').on('click', function(event) {
+  console.log('This is great grand father', event.target);
+});
+
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>$.fn.live vs $.fn.bind</h3>
+
+          <small>
+            <a target="_blank" href="./playground/live-bind.html">playground/live-bind.html</a>
+          </small>
+
+          <pre>
+            <code class="html" data-trim contenteditable="true">
+&lt;body&gt;
+  &lt;button&gt;Clickable&lt;/button&gt;
+&lt;/body&gt;
+            </code>
+          </pre>
+
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+// Bind click listener by
+//   $('button').bind('click', ...)
+$('button').on('click', function() {
+  console.log('Click from `on`');
+});
+
+// Bind click listener by
+//   $('button').live('click', ...)
+$(document).on('click', 'button', function() {
+  console.log('Click from `live`');
+});
+
+// Then create new button,
+//   only one message will be appear
+//   in console when this button's clicked
+$('&lt;button&gt;Unclickable&lt;/button&gt;').appendTo(document.body);
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>UX breakdown</h3>
+        </section>
+      </section><!-- #def-01 -->
+
+      <section id="def-02">
+        <section>
+          <h2>Tuesday D-E-F</h2>
+          <h4>JSONP vs. JSON</h4>
+        </section>
+
+        <section>
+          <h3>Cross Origin Resource Sharing (CORS)</h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+$.ajax({
+  url: 'http://www.bbc.com/'
+})
+.success(function(response) {
+  // Let's copy the content of BBC and paste it to our page.
+  //   so we'll have a pretty live duplication of BBC
+  //   with `our own domain`.
+  //
+  // Lol, we don't need to write / maintain anything, the BBC team
+  //   will take care of that, we'll just create some ads/banners
+  //   and be happy with easy money
+  //
+  // What an millionaire idea! And it's crazy simple
+  //
+  // How about purchasing BBW.com for that superb idea?
+  // (Lol, it's not available, and it's not an adult site either)
+
+  $(document.body).html(response);
+})
+.error(function() {
+  // Eck! CORS has just destroyed that crazy idea ...
+  // ...
+
+  console.error('.. there is definitely no easy money ..');
+})
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>JSONP</h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+// Suppose we have `jsonp.php` as a simple web service
+//   that returns the default password of a company
+$.ajax('./playground/jsonp.php').success(function(response) {
+  alert('The password is ' + response);
+});
+
+// Now if that `jsonp.php` is not on the same domain
+//   then CORS will block the browser from dispatching the response
+// So how?
+// Well, we can modify the response header or implement JSONP,
+//   but either way, we have to update the `jsonp.php`
+
+// Let's go with the JSONP file,
+//   the JS should be modified like below
+function renderTheData(response) {
+  alert('The password is ' + response);
+}
+$('&lt;script src="./playground/jsonp.php?fn=renderTheData"&gt;&lt;&gt;').appendTo(document.body);
+            </code>
+          </pre>
+
+          <pre>
+            <code class="php" data-trim contenteditable="true">
+&lt;?php
+// This is the original jsonp.php
+echo '0510..';
+
+&lt;?php
+// This is the modified jsonp.php to support JSONP
+$callback = $_GET['fn'];
+echo $callback . '(0510..)'; // should be come renderTheData('0510..') as in our example
+            </code>
+          </pre>
+        </section>
+      </section><!-- #def-02 -->
+
+      <section id="def-03">
+        <section>
+          <h2>Wednesday D-E-F</h2>
+          <h4>Beware, a <b>promise</b> could be rejected.</h4>
+        </section>
+
+        <section>
+          <h3>window.onload and $.ajax</h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+// This will be triggered when window load
+window.onload = function() {}
+
+
+// This will be triggered when the DOM has been loaded
+//   or the jQuery way $(document).ready(function() {  });
+document.addEventListener('DOMContentLoaded', function(){}, false);
+
+
+// Asynchronous Javascript And Xml
+$.ajax('..')
+.success(function(response) {
+  alert('Success! The response is ' + response);
+})
+.error(function() {
+  alert('Error!');
+})
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>`Kris Kowal's q` and $.Deferred</h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+var process = $.Deffered();
+process.then(function(outcome) {
+  alert('The result is' + outcome);
+});
+process.fail(function(err) {
+  alert('Oops, error occured. ' + err);
+})
+
+
+// This is a very very long process
+//   and include a lot complex processes
+var result = !@#!@%!*@%_;
+
+// Cool, we're all done,
+//   let's tell them that we finish
+process.resolve(result);
+
+// What if instead of having the result
+//   we get a mistake, and everything is broken
+//   then just tell them we're failed
+process.reject(result);
+
+            </code>
+          </pre>
+        </section>
+      </section><!-- #def-03 -->
+
+      <section id="def-04">
+        <section>
+          <h2>Thursday D-E-F</h2>
+          <h4><b>Variable</b>s are alive.</h4>
+        </section>
+
+        <section>
+          <h3>The var keyword</h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+var x = 456;
+function aBox() {
+  var x = 123;
+}
+aBox();
+console.log(x); // 456
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>Lockdown closure</h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+// Suppose we have an array of cats
+//   and we wanna name a nickname
+//   for each of them
+//   but we have to ask server first
+var cats = ['kitty', 'tom'];
+
+for(var i=0, n=cats.length; i&lt;n; ++i) {
+  $.ajax('./what-the-name.php?cat=' + cats[i])
+  .success(function(response) {
+    cats[i].nickname = response; // Changes are only the last cat get a nickname
+                                 //   as the `i` variable at this point
+                                 //   usually equals to (n - 1)
+  });
+}
+
+// It should be something like this
+for(var i=0, n=cats.length; i&lt;n; ++i) {
+  (function(i) {
+    // This `i` is different from the outside i and it's static
+    $.ajax('./what-the-name.php?cat=' + cats[i])
+    .success(function(response) {
+      cats[i].nickname = response;
+    });
+  })(i);
+}
+            </code>
+          </pre>
+        </section>
+      </section><!-- #def-04 -->
+
+      <section id="def-05">
+        <section>
+          <h2>Friday D-E-F</h2>
+          <h4><b>OOP</b>s! It's everywhere in this <b>context</b>!</h4>
+        </section>
+
+        <section>
+          <h3>OOP like Java: <b>method and attributes</b></h3>
+          <small>
+            <a target="_blank" href="./playground/oop.html">playground/oop.html</a>
+          </small>
+
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+/**
+ * @name Cat
+ * @constructor
+ * @param {String} name
+ * @param {String} country
+ * @description
+ * We all know about Cat but our Cat will know how to introduce itself
+ */
+function Cat(name, country) {
+  this.name = name;
+  this.country = country;
+}
+
+/**
+ * @name Cat#introduce
+ * @method
+ * @return {Cat} this
+ */
+Cat.prototype.introduce = function() {
+  alert('This is ' + this.name + ' from ' + this.country);
+  return this;
+};
+
+var kittyCat = new Cat('Kitty', 'Japan')
+  , tomCat = new Cat('Tom', 'US');
+
+kittyCat.introduce();
+tomCat.introduce();
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>OOP like Java: <b>extend</b></h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+/**
+ * @name Animal
+ * @constructor
+ * @description
+ * An Animal know how to eat, sleep, and make love
+ */
+function Animal() {
+}
+
+Animal.prototype.eat = function() {
+  alert('Yes, lets eat');
+};
+Animal.prototype.sleep = function() {
+  alert('Yes, lets sleep');
+};
+Animal.prototype.makeLove = function() {
+  alert('Hooray! lets make love');
+};
+
+/**
+ * @name Cat
+ * @constructor
+ * @extends Animal
+ * @description
+ * A Cat is an animal, of course it should know how to eat, sleep, make love
+ * .. and introduce itself
+ */
+function Cat() {
+}
+
+Cat.prototype = new Animal(); // Or more proper Cat.prototype = Object.create(Animal.prototype);
+Cat.prototype.constructor = Cat; // This is optional, but good practice
+
+Cat.prototype.introduce = function() {
+  // ...
+}
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>OOP like Java: <b>public and private</b></h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+function Cat() {
+  // Note that these method is usable in this function scope only
+  var aPrivateAttribute = null;
+  var aPrivateMethod = function() {}
+
+  this.aPublicAttribute = null;
+}
+
+Cat.prototype.publicMethod = function() {};
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>OOP like Java: <b>static</b></h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+function Cat() {}
+
+/**
+ * @name Cat.englishName
+ * @type String
+ */
+Cat.english = 'cat';
+
+/**
+ * @name Cat.vietnamese
+ * @type String
+ */
+Cat.vietnamese = 'mèo';
+            </code>
+          </pre>
+        </section>
+      </section><!-- #def-05 -->
+
+      <section id="def-06">
+        <section>
+          <h2>Saturday D-E-F</h2>
+          <h4><b>XSS</b>, <b>CSRF</b> and <b>JSON Hijacking</b></h4>
+        </section>
+
+        <section>
+          <h3>Keylogging with <b>XSS</b></h3>
+        </section>
+
+        <section>
+          <h3>Hacking account with <b>CSRF</b></h3>
+        </section>
+
+        <section>
+          <h3>JSON Hijacking to bypass <b>CORS</b></h3>
+        </section>
+      </section><!-- #def-06 -->
+
+      <section id="def-07">
+        <section>
+          <h2>Sunday D-E-F</h2>
+          <h4>Regular expression</h4>
+        </section>
+
+        <section>
+          <h3>Just don't worry</h3>
+          <p>
+            <small>
+              Feel free to visit the <a href="http://clients.offspringdigital.com/elmnd/regexp/">regexp show</a>
+            </small>
+          </p>
+        </section>
+      </section><!-- #def-07 -->
+
+
+      <section id="quick-quiz">
+        <section>
+          <h1>QQ . quick quiz</h1>
+          <p>
+            <small>
+              Let's open a browser's console to try these fun snippets
+            </small>
+          </p>
+        </section>
+
+        <section>
+          <h3>1 + 2 = 3</h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+console.log(0.1 + 0.2 === 0.3);
+console.log(0.1 + 0.2 == 0.3);
+console.log(0.01 + 0.02 == 0.03);
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3><b>++_++</b> and <b>--_--</b><h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+var x = 13;
+x = x++;
+x = ++x;
+console.log(x);
+
+var x = 13;
+x = x++ + ++x;
+console.log(x);
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>Logically says, it's a logical logic</h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+var x = 13;
+x && (x = x + 7) && (x = x - 20) && (x = 13) && (x++);
+console.log(x);
+
+var x = 13;
+x || (x = x + 7) || (x = x - 20) || (x = 13) || (x++);
+console.log(x);
+
+var x = 13;
+(x == x++) && (x = ++x + 1);
+(x == ++x) && (x = x++ + 1);
+console.log(x);
+
+var success = false;
+success && alert('Success!') || alert('Error..');
+!!success ? alert('Success again!') : alert('Error again..');
+            </code>
+          </pre>
+        </section>
+
+        <section>
+          <h3>Everything has its own <b>context</b></h3>
+          <pre>
+            <code class="js" data-trim contenteditable="true">
+function Cat(numberOfLegs) {
+  this.numberOfLegs = numberOfLegs;
+}
+
+var kittyCat = new Cat(4)
+  , tomCat = Cat(5);
+
+console.log(kittyCat.numberOfLegs);
+console.log(tomCat.numberOfLegs);
+console.log(window.numberOfLegs);
+            </code>
+          </pre>
+        </section>
+      </section><!-- #quick-quiz -->
+
+
+      <section id="bonus">
+        <section>
+          <h1>A few bonus .. </h1>
+        </section>
+
+        <section>
+          <h2>Wanna become a JS mania?</h2>
+          <ul>
+            <li>
+              <a href="http://www.amazon.com/Pro-JavaScript-Techniques-Second-Edition/dp/1430263911">
+                Pro JavaScript Techniques
+              </a>
+              - John Resig
+            </li>
+            <li>
+              <a href="http://www.manning.com/resig/">
+                Secrets of the JavaScript Ninja
+              </a>
+              - John Resig and Bear Bibeault
+            </li>
+            <li>
+              <a href="https://developer.mozilla.org">
+                Mozilla Developer Network
+              </a>
+            </li>
+          </ul>
+        </section>
+      </section>
+
+
+      <section id="final-words">
+          <h1>
+            Enjoy it?
+          </h1>
+          <p>Well I don't believe so</p>
+          <p>
+            Thanks for spending your time the weird way.
+            And again, if you suddenly become another JS lover,
+            feel free to shoot me an email at
+            <a href="mailto:minhnd.it@gmail.com">minhnd.it@gmail.com</a></small>
+          </p>
+      </section><!-- #final-words -->
+    </div>
+  </div>
+
+  <!--[if lt IE 9]>
+    <script src="vendors/reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+  <script src="./vendors/reveal.js/lib/js/head.min.js"></script>
+  <script src="./vendors/reveal.js/js/reveal.js"></script>
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>

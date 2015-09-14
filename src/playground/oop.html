@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+  <script>
+    /**
+     * @name Cat
+     * @constructor
+     * @param {String} name
+     * @param {String} country
+     * @description
+     * We all know about Cat but our Cat will know how to introduce itself
+     */
+    function Cat(name, country) {
+      this.name = name;
+      this.country = country;
+    }
+
+    /**
+     * @name Cat#introduce
+     * @method
+     * @return {Cat} this
+     */
+    Cat.prototype.introduce = function() {
+      alert('This is ' + this.name + ' from ' + this.country);
+      return this;
+    };
+
+    var kittyCat = new Cat('Kitty', 'Japan')
+      , tomCat = new Cat('Tom', 'US');
+
+    kittyCat.introduce();
+    tomCat.introduce();
+  </script>
+</body>
+</html>

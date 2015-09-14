@@ -1,0 +1,16 @@
+{
+  "name": "Offspring dev-ketchup Javascript",
+  "version": "0.0.1",
+  "authors": [
+    "soyelmnd <minhnd.it@gmail.com>"
+  ],
+  "description": "Offspring digital dev-ketchup. Weird javascript",
+  "keywords": [
+    "javascript",
+    "offspring"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "reveal.js": "~3.1.0"
+  }
+}

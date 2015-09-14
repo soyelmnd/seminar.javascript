@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <button>Clickable</button>
+
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script>
+  $(function() {
+    // Bind click listener by
+    //   $('button').bind('click', ...)
+    $('button').on('click', function() {
+      console.log('Click from `on`');
+    });
+
+    // Bind click listener by
+    //   $('button').live('click', ...)
+    $(document).on('click', 'button', function() {
+      console.log('Click from `live`');
+    });
+
+    // Then create new button,
+    //   only one message will be appear
+    //   in console when this button's clicked
+    $('<button>Unclickable</button>').appendTo(document.body);
+  });
+  </script>
+</body>
+</html>
